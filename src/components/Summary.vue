@@ -1,4 +1,11 @@
-<script setup></script>
+<script setup>
+defineProps({
+	isDropshipping: {
+		required: true,
+		default: false,
+	},
+})
+</script>
 <template>
 	<div class="section_right w-100 flex flex_column flex_column_justify_between">
 		<div>
@@ -12,7 +19,10 @@
 				<span>Cost of goods</span>
 				<b>500,000</b>
 			</div>
-			<div class="flex flex_justify_between flex_items_center margin_top_10">
+			<div
+				class="flex flex_justify_between flex_items_center margin_top_10"
+				v-if="isDropshipping"
+			>
 				<span>Dropshipping Fee</span>
 				<b>5,900</b>
 			</div>
