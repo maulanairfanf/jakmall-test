@@ -1,44 +1,80 @@
 <script setup>
-import { ArrowLeftIcon, ChevronRightIcon } from '@heroicons/vue/24/solid'
-import TabContent from './components/TabContent.vue'
+import { ArrowLeftIcon } from '@heroicons/vue/24/solid'
+import TabContentDelivery from './components/TabContentDelivery.vue'
+import TabContentPayment from './components/TabContentPayment.vue'
 import Summary from './components/Summary.vue'
+import { computed, ref } from 'vue'
+import NavigationTab from './components/NavigationTab.vue'
+
+const step = ref(2)
+const isDropshipping = ref(false)
+const shipment = ref({
+	title: 'GO-SEND',
+	price: '15,000',
+})
+const payment = ref({
+	title: 'e-Wallet',
+	description: '1,500,000 left',
+})
+function handleDropshipping(payload) {
+	isDropshipping.value = payload
+}
+
+function handleBack() {
+	if (step.value !== 1) {
+		step.value--
+	}
+}
+
+function handleNext() {
+	if (step.value !== 3) {
+		step.value++
+	}
+}
+
+function handlePayment(payload) {
+	payment.value = payload
+}
+
+function handleShipment(payload) {
+	shipment.value = payload
+}
+
+const getTitleButtonBack = computed(() => {
+	if (step.value === 1) {
+		return 'Back to cart'
+	} else if (step.value === 2) {
+		return 'Back to delivery'
+	} else {
+		return ''
+	}
+})
 </script>
 
 <template>
-	<div class="flex flex_justify_center">
-		<div class="header_navigation flex flex_justify_center flex-items-center">
-			<div class="flex flex-items-center margin_right_10">
-				<div class="circle_navigation margin_right_10">
-					<span>1</span>
-				</div>
-				<span class="text_primary margin_right_10">Delivery</span>
-				<ChevronRightIcon class="text_primary icon" />
-			</div>
-			<div class="flex flex-items-center margin_right_10">
-				<div class="circle_navigation margin_right_10">
-					<span>2</span>
-				</div>
-				<span class="text_primary margin_right_10">Delivery</span>
-				<ChevronRightIcon class="text_primary icon" />
-			</div>
-			<div class="flex flex-items-center margin_right_10">
-				<div class="circle_navigation margin_right_10">
-					<span>3</span>
-				</div>
-				<span class="text_primary margin_right_10">Delivery</span>
-			</div>
-		</div>
-	</div>
+	<NavigationTab :step="step" />
 	<div class="box rounded">
 		<div class="flex flex_items_center">
-			<button class="button_icon">
+			<button class="button_icon" @click="handleBack()">
 				<ArrowLeftIcon class="icon" />
 			</button>
-			<p class="margin margin_left_10">Back to cart</p>
+			<p class="margin margin_left_10">{{ getTitleButtonBack }}</p>
 		</div>
 		<div class="flex flex_justify_between">
-			<TabContent />
-			<Summary />
+			<TabContentDelivery
+				@handle-dropshipping="handleDropshipping"
+				v-if="step === 1"
+			/>
+			<TabContentPayment
+				@handle-shipment="handleShipment"
+				@handle-payment="handlePayment"
+				v-if="step === 2"
+			/>
+			<Summary
+				@handle-next="handleNext"
+				:isDropshipping="isDropshipping"
+				:shipment="shipment"
+			/>
 		</div>
 	</div>
 </template>
