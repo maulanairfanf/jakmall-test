@@ -1,0 +1,119 @@
+primary = #FF8A00
+secondary = #FFFAE6
+success = #1BD97B
+gray = #EEEEEE
+
+:root
+	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif 
+
+body
+	margin: 0
+	display: flex
+	place-items: center
+	justify-content: center
+	min-height: 100vh
+	background-color: secondary
+
+
+.box
+	background-color: white
+	min-height:80vh
+	width: 80vw
+	border-radius: 4px
+	padding: 20px 40px 20px 40px
+
+.icon
+	width: 24px
+	&_mini
+		width: 16px
+
+.flex
+	display: flex
+	flex-wrap: wrap
+	&_column
+		flex-direction: column;
+		&_justify_between
+			justify-content: space-between
+	&_items_center
+		align-items: center
+	&_justify_between
+		justify-content: space-between
+	&_justify_center
+		justify-content: center
+
+
+.section_right
+	border-left: 1px solid primary
+	padding-left: 40px
+	min-height:70vh
+	min-width: 30%
+
+.text_primary
+	color #FF8A00
+
+.underline 
+	height: 7px
+	width: 110%
+	background-color: gray
+  z-index: -1
+	position: absolute
+	transform: translate(10px, 10px)
+
+h1 
+	width: fit-content
+	margin: 0
+
+.w_100
+	width: 100%
+
+.input_container
+	padding: 20px
+	margin: 10px 10px 10px 0px
+	width:400px
+	font-size: 16px
+
+.button_payment
+	padding: 20px
+	border-radius: 4px
+	background-color: primary
+	color: white
+	border: none
+	cursor: pointer
+	width: 100%
+	margin-top: 10px
+	font-size: 24px
+
+.margin
+	&_top_10
+		margin-top: 10px
+	&_bottom_10
+		margin-bottom: 10px
+	&_left_10
+		margin-left: 10px
+	&_right_10
+		margin-right: 10px
+
+.button_icon 
+	background-color: transparent
+	border: none
+	cursor: pointer
+	margin-top: 5px
+
+.header_navigation
+	position: absolute;
+	background-color: secondary
+	padding: 20px
+	border-radius: 20px
+	margin-top: -35px
+
+.circle_navigation
+	width: 30px
+	height: 30px
+	background-color: primary
+	border-radius: 50%
+	color: white
+	display flex
+	align-items: center
+	justify-content: center
+	span
+		margin-bottom: 2px
