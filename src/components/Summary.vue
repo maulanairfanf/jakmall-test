@@ -1,31 +1,16 @@
 <script setup>
 import { computed } from 'vue'
+import { useStore } from '../stores'
 
-const props = defineProps({
-	isDropshipping: {
-		type: Boolean,
-		required: true,
-		default: false,
-	},
-	shipment: {
-		type: Object,
-		required: true,
-	},
-	step: {
-		type: Number,
-		required: true,
-		default: 1,
-	},
-})
-
-const emits = defineEmits(['handle-next'])
+const store = useStore()
+const { handleNext } = store
 
 const getEstimateTime = computed(() => {
-	if (props.shipment.title === 'GO-SEND') {
+	if (store.shipment.title === 'GO-SEND') {
 		return 'today'
-	} else if (props.shipment.title === 'JNE') {
+	} else if (store.shipment.title === 'JNE') {
 		return '2 days'
-	} else if (props.shipment.title === 'Personal Courier') {
+	} else if (store.shipment.title === 'Personal Courier') {
 		return '1 day'
 	} else {
 		return ''
@@ -33,8 +18,8 @@ const getEstimateTime = computed(() => {
 })
 
 const getTitleButton = computed(() => {
-	if (props.shipment) {
-		return `Pay with ${props.shipment.title}`
+	if (store.shipment.title) {
+		return `Pay with ${store.shipment.title}`
 	} else {
 		return 'Continue to Payment'
 	}
@@ -47,12 +32,21 @@ const getTitleButton = computed(() => {
 				<b class="text_primary">Summary</b>
 			</h1>
 			<span class="">10 items purchased</span>
-			<div class="underline_mini"></div>
-			<div class="flex flex_column" v-if="shipment">
-				<b>Delivery estimation</b>
-				<span class="text_success"
-					>{{ getEstimateTime }} {{ shipment.title }}</span
-				>
+			<div v-if="store.shipment.title && store.step > 1">
+				<div class="underline_mini"></div>
+				<div class="flex flex_column">
+					<b>Delivery estimation</b>
+					<b class="text_success"
+						>{{ getEstimateTime }} {{ store.shipment.title }}</b
+					>
+				</div>
+			</div>
+			<div v-if="store.payment.title && store.step > 1">
+				<div class="underline_mini"></div>
+				<div class="flex flex_column">
+					<b>Payment Method</b>
+					<b class="text_success">{{ store.payment.title }}</b>
+				</div>
 			</div>
 		</div>
 		<div>
@@ -62,24 +56,33 @@ const getTitleButton = computed(() => {
 			</div>
 			<div
 				class="flex flex_justify_between flex_items_center margin_top_10"
-				v-if="isDropshipping"
+				v-if="store.isDropshipping"
 			>
 				<span>Dropshipping Fee</span>
 				<b>5,900</b>
 			</div>
 			<div
 				class="flex flex_justify_between flex_items_center margin_top_10"
-				v-if="shipment"
+				v-if="store.shipment.title && store.step > 1"
 			>
-				<span>{{ shipment.title }} shipment</span>
-				<b>{{ shipment.price }}</b>
+				<span
+					><b>
+						{{ store.shipment.title }}
+					</b>
+					shipment</span
+				>
+				<b>{{ store.shipment.price }}</b>
 			</div>
 			<div class="flex flex_justify_between flex_items_center margin_top_10">
 				<h1 class="text_primary">Total</h1>
 				<h1 class="text_primary">505,900</h1>
 			</div>
-			<div class="flex flex_justify_center" v-if="step !== 3">
-				<button class="button_payment" @click="emits('handle-next')" disable>
+			<div class="flex flex_justify_center" v-if="store.step !== 3">
+				<button
+					class="button_payment"
+					@click="handleNext()"
+					:disabled="store.isDisableButtonSummary"
+				>
 					{{ getTitleButton }}
 				</button>
 			</div>

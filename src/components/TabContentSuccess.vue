@@ -2,19 +2,14 @@
 import { computed } from 'vue'
 import HeaderTab from './HeaderTab.vue'
 import { ArrowLeftIcon } from '@heroicons/vue/24/solid'
-const props = defineProps({
-	shipment: {
-		type: Object,
-		required: true,
-	},
-})
-const emits = defineEmits(['handle-back'])
+import { useStore } from '../stores'
+
+const store = useStore()
+const { handleBack, resetStorage, resetState } = store
 
 const generateRandomAlphanumeric = computed(() => {
-	// Karakter alphanumeric yang diizinkan
 	const alphanumericChars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'
 
-	// Menghasilkan string acak dengan panjang 5
 	let randomString = ''
 	for (let i = 0; i < 5; i++) {
 		const randomIndex = Math.floor(Math.random() * alphanumericChars.length)
@@ -23,6 +18,12 @@ const generateRandomAlphanumeric = computed(() => {
 
 	return randomString
 })
+
+function goFirstStep() {
+	handleBack(1)
+	store.$reset()
+	resetStorage()
+}
 </script>
 
 <template>
@@ -31,10 +32,10 @@ const generateRandomAlphanumeric = computed(() => {
 			<HeaderTab title="Thank You" />
 			<div class="margin_top_30">
 				<b>Order ID : {{ generateRandomAlphanumeric }}</b>
-				<p>You order will be delivered today with {{ shipment.title }}</p>
+				<p>You order will be delivered today with {{ store.shipment.title }}</p>
 			</div>
 			<div class="flex flex_items_center">
-				<button class="button_icon" @click="emits('handle-back', 1)">
+				<button class="button_icon" @click="goFirstStep()">
 					<ArrowLeftIcon class="icon" />
 				</button>
 				<p class="margin margin_left_10">Go to homepage</p>

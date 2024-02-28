@@ -1,18 +1,10 @@
 <script setup>
-import { CheckBadgeIcon, CheckIcon, XMarkIcon } from '@heroicons/vue/24/solid'
+import { CheckIcon } from '@heroicons/vue/24/solid'
 import HeaderTab from './HeaderTab.vue'
 import { ref } from 'vue'
+import { useStore } from '../stores'
 
-const emits = defineEmits(['handle-shipment', 'handle-payment'])
-
-const shipment = ref({
-	title: 'GO-SEND',
-	price: '15,000',
-})
-const payment = ref({
-	title: 'e-Wallet',
-	description: '1,500,000 left',
-})
+const store = useStore()
 
 const listShipment = ref([
 	{
@@ -45,13 +37,11 @@ const listPayment = ref([
 ])
 
 function handleChooseShipment(payload) {
-	if (payload !== shipment.value) shipment.value = payload
-	emits('handle-shipment', payload)
+	if (payload !== store.shipment) store.shipment = payload
 }
 
 function handleChoosePayment(payload) {
-	if (payload !== payment.value) payment.value = payload
-	emits('handle-payment', payload)
+	if (payload !== store.payment) store.payment = payload
 }
 </script>
 <template>
@@ -64,7 +54,8 @@ function handleChoosePayment(payload) {
 					:key="index"
 					class="flex shipment_content_box"
 					:class="
-						shipment.title === item.title && 'shipment_content_box_active '
+						store.shipment.title === item.title &&
+						'shipment_content_box_active '
 					"
 					@click="handleChooseShipment(item)"
 				>
@@ -76,7 +67,9 @@ function handleChoosePayment(payload) {
 						<CheckIcon
 							class="icon mini_icon"
 							:class="
-								shipment.title === item.title ? 'text_success ' : 'display_none'
+								store.shipment.title === item.title
+									? 'text_success '
+									: 'display_none'
 							"
 						/>
 					</div>
@@ -90,7 +83,9 @@ function handleChoosePayment(payload) {
 					v-for="(item, index) in listPayment"
 					:key="index"
 					class="flex payment_content_box"
-					:class="payment.title === item.title && 'payment_content_box_active '"
+					:class="
+						store.payment.title === item.title && 'payment_content_box_active '
+					"
 					@click="handleChoosePayment(item)"
 				>
 					<div class="flex flex_column">
@@ -101,7 +96,9 @@ function handleChoosePayment(payload) {
 						<CheckIcon
 							class="icon mini_icon"
 							:class="
-								payment.title === item.title ? 'text_success ' : 'display_none'
+								store.payment.title === item.title
+									? 'text_success '
+									: 'display_none'
 							"
 						/>
 					</div>

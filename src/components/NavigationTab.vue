@@ -12,7 +12,7 @@ defineProps({
 <template>
 	<div class="flex flex_justify_center">
 		<div class="header_navigation flex flex_justify_center flex_items_center">
-			<div class="flex flex_items_center margin_right_10">
+			<div class="flex flex_items_center tab">
 				<div
 					class="circle_navigation margin_right_10"
 					:class="step >= 1 && 'circle_navigation_active'"
@@ -22,24 +22,24 @@ defineProps({
 				<span class="text_primary margin_right_10">Delivery</span>
 				<ChevronRightIcon class="text_primary icon" />
 			</div>
-			<div class="flex flex_items_center margin_right_10">
+			<div class="flex flex_items_center tab">
 				<div
 					class="circle_navigation margin_right_10"
 					:class="step >= 2 && 'circle_navigation_active'"
 				>
 					<span>2</span>
 				</div>
-				<span class="text_primary margin_right_10">Delivery</span>
+				<span class="text_primary margin_right_10">Payment</span>
 				<ChevronRightIcon class="text_primary icon" />
 			</div>
-			<div class="flex flex_items_center margin_right_10">
+			<div class="flex flex_items_center tab">
 				<div
 					class="circle_navigation margin_right_10"
 					:class="step >= 3 && 'circle_navigation_active'"
 				>
 					<span>3</span>
 				</div>
-				<span class="text_primary margin_right_10">Delivery</span>
+				<span class="text_primary margin_right_10">Finish</span>
 			</div>
 		</div>
 	</div>
