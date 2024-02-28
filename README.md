@@ -16,3 +16,5 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 Mohon maaf sebelumnya, saya sudah membaca ketentuan bahwa jangan push source code ke gitlab, github, bitbucket. Tapi saya secara tidak sengaja melakukan push ke github saya, jika memang itu berpengaruh dengan hal yang ada didalam folder .git saya akan mencantumkan link repository code ini untuk dapat melihat history commit yang saya lakukan.
 
 Sekali lagi mohon maaf dan terima kasih
+
+#Link Github : https://github.com/maulanairfanf/jakmall-test.git
