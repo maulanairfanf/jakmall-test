@@ -11,6 +11,11 @@ const props = defineProps({
 		type: Object,
 		required: true,
 	},
+	step: {
+		type: Number,
+		required: true,
+		default: 1,
+	},
 })
 
 const emits = defineEmits(['handle-next'])
@@ -74,7 +79,7 @@ const getTitleButton = computed(() => {
 				<h1 class="text_primary">505,900</h1>
 			</div>
 			<div class="flex flex_justify_center" v-if="step !== 3">
-				<button class="button_payment" @click="emits('handle-next')">
+				<button class="button_payment" @click="emits('handle-next')" disable>
 					{{ getTitleButton }}
 				</button>
 			</div>

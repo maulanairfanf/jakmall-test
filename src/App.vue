@@ -5,8 +5,9 @@ import TabContentPayment from './components/TabContentPayment.vue'
 import Summary from './components/Summary.vue'
 import { computed, ref } from 'vue'
 import NavigationTab from './components/NavigationTab.vue'
+import TabContentSuccess from './components/TabContentSuccess.vue'
 
-const step = ref(2)
+const step = ref(3)
 const isDropshipping = ref(false)
 const shipment = ref({
 	title: 'GO-SEND',
@@ -20,8 +21,10 @@ function handleDropshipping(payload) {
 	isDropshipping.value = payload
 }
 
-function handleBack() {
-	if (step.value !== 1) {
+function handleBack(payload) {
+	if (payload) {
+		step.value = payload
+	} else if (step.value !== 1) {
 		step.value--
 	}
 }
@@ -54,7 +57,10 @@ const getTitleButtonBack = computed(() => {
 <template>
 	<NavigationTab :step="step" />
 	<div class="box rounded">
-		<div class="flex flex_items_center">
+		<div
+			class="flex flex_items_center"
+			:class="getTitleButtonBack === '' && 'visibility_hidden'"
+		>
 			<button class="button_icon" @click="handleBack()">
 				<ArrowLeftIcon class="icon" />
 			</button>
@@ -62,18 +68,24 @@ const getTitleButtonBack = computed(() => {
 		</div>
 		<div class="flex flex_justify_between">
 			<TabContentDelivery
-				@handle-dropshipping="handleDropshipping"
 				v-if="step === 1"
+				@handle-dropshipping="handleDropshipping"
 			/>
 			<TabContentPayment
+				v-if="step === 2"
 				@handle-shipment="handleShipment"
 				@handle-payment="handlePayment"
-				v-if="step === 2"
+			/>
+			<TabContentSuccess
+				v-if="step === 3"
+				:shipment="shipment"
+				@handle-back="handleBack"
 			/>
 			<Summary
 				@handle-next="handleNext"
 				:isDropshipping="isDropshipping"
 				:shipment="shipment"
+				:step="step"
 			/>
 		</div>
 	</div>

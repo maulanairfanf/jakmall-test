@@ -115,19 +115,23 @@ function handleDropShipper() {
 						/>
 					</div>
 					<textarea
+						v-model="address"
 						maxlength="120"
 						class="input_container"
 						placeholder="Delivery Address"
-						v-model="address"
 						@keypress="handleInputAddress"
 						:class="!checkAddress && 'input_container_primary'"
 					/>
-					<p>{{ 120 - address.length }}</p>
+					<span>{{ 120 - address.length }}</span>
 				</div>
 			</div>
 			<div class="px-10">
 				<div class="flex flex_column">
-					<input class="input_container" placeholder="Dropshipper name" />
+					<input
+						v-model="dropshipperName"
+						class="input_container"
+						placeholder="Dropshipper name"
+					/>
 					<div class="flex flex_items_center flex_justify_end">
 						<input
 							v-model="dropshipperNumber"
